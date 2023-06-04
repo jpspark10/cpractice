@@ -95,18 +95,18 @@ int popBack(Node **head) {
 void insert(Node *head, unsigned n, int val) {
     unsigned i = 0;
     Node *tmp = NULL;
-    //Находим нужный элемент. Если вышли за пределы списка, то выходим из цикла,
-    //ошибка выбрасываться не будет, произойдёт вставка в конец
+    //ГЌГ ГµГ®Г¤ГЁГ¬ Г­ГіГ¦Г­Г»Г© ГЅГ«ГҐГ¬ГҐГ­ГІ. Г…Г±Г«ГЁ ГўГ»ГёГ«ГЁ Г§Г  ГЇГ°ГҐГ¤ГҐГ«Г» Г±ГЇГЁГ±ГЄГ , ГІГ® ГўГ»ГµГ®Г¤ГЁГ¬ ГЁГ§ Г¶ГЁГЄГ«Г ,
+    //Г®ГёГЁГЎГЄГ  ГўГ»ГЎГ°Г Г±Г»ГўГ ГІГјГ±Гї Г­ГҐ ГЎГіГ¤ГҐГІ, ГЇГ°Г®ГЁГ§Г®Г©Г¤ВёГІ ГўГ±ГІГ ГўГЄГ  Гў ГЄГ®Г­ГҐГ¶
     while (i < n && head->next) {
         head = head->next;
         i++;
     }
     tmp = (Node*) malloc(sizeof(Node));
     tmp->value = val;
-    //Если это не последний элемент, то next перекидываем на следующий узел
+    //Г…Г±Г«ГЁ ГЅГІГ® Г­ГҐ ГЇГ®Г±Г«ГҐГ¤Г­ГЁГ© ГЅГ«ГҐГ¬ГҐГ­ГІ, ГІГ® next ГЇГҐГ°ГҐГЄГЁГ¤Г»ГўГ ГҐГ¬ Г­Г  Г±Г«ГҐГ¤ГіГѕГ№ГЁГ© ГіГ§ГҐГ«
     if (head->next) {
         tmp->next = head->next;
-    //иначе на NULL
+    //ГЁГ­Г Г·ГҐ Г­Г  NULL
     } else {
         tmp->next = NULL;
     }
@@ -168,15 +168,15 @@ void printLinkedList(const Node *head) {
 void main() {
     Node* head = NULL;
     int arr[] = {1,2,3,4,5,6,7,8,9,10};
-    //Создаём список из массива
+    //Create a list from array
     fromArray(&head, arr, 10);
 
     printLinkedList(head);
 
-    //Вставляем узел со значением 333 после 4-го элемента (станет пятым)
+    //Insert node with value 333 after the 4th element
     insert(head, 4, 333);
     printLinkedList(head);
-    //Вставляем данные штучкидрючки в конец списка
+    //Insert 4 elements at the end of the list
     pushBack(head, 11);
     pushBack(head, 12);
     pushBack(head, 13);
@@ -186,10 +186,10 @@ void main() {
 
 
     printLinkedList(head);
-    //Удаляем пятый элемент (индексация с нуля)
+    //Delete 5-th element
     deleteNth(&head, 4);
     printLinkedList(head);
-    //Удаляем весь список
+    //Delete list
     deleteList(&head);
 
     getch();
