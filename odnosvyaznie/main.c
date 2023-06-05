@@ -92,25 +92,37 @@ int popBack(Node **head) {
     }
 }
 
+int GetSize(Node* head){
+    int size = 0;
+    if (head != NULL)
+    {
+    size = 1 + GetSize(head->next);//переход к следующему элементу}
+    }
+    return size;
+}
+
 void insert(Node *head, unsigned n, int val) {
     unsigned i = 0;
     Node *tmp = NULL;
-    //Íàõîäèì íóæíûé ýëåìåíò. Åñëè âûøëè çà ïðåäåëû ñïèñêà, òî âûõîäèì èç öèêëà,
-    //îøèáêà âûáðàñûâàòüñÿ íå áóäåò, ïðîèçîéä¸ò âñòàâêà â êîíåö
-    while (i < n && head->next) {
-        head = head->next;
-        i++;
+    if (n > GetSize(head) || n < 0){
+        printf("Error, wrong index.\n");
+        return 0;
     }
-    tmp = (Node*) malloc(sizeof(Node));
-    tmp->value = val;
-    //Åñëè ýòî íå ïîñëåäíèé ýëåìåíò, òî next ïåðåêèäûâàåì íà ñëåäóþùèé óçåë
-    if (head->next) {
-        tmp->next = head->next;
-    //èíà÷å íà NULL
-    } else {
-        tmp->next = NULL;
+    else{
+        while (i < n && head->next) {
+            head = head->next;
+            i++;
+        }
+        tmp = (Node*) malloc(sizeof(Node));
+        tmp->value = val;
+        if (head->next) {
+            tmp->next = head->next;
+        } else {
+            tmp->next = NULL;
+        }
+        head->next = tmp;
     }
-    head->next = tmp;
+
 }
 
 int deleteNth(Node **head, int n) {
@@ -168,27 +180,44 @@ void printLinkedList(const Node *head) {
 void main() {
     Node* head = NULL;
     int arr[] = {1,2,3,4,5,6,7,8,9,10};
-    //Create a list from array
     fromArray(&head, arr, 10);
 
-    printLinkedList(head);
+    int status = 0;
+    int index,number;
+    while (1){
+        printf("pushBack - 1, insert - 2, delete - 3, printList - 4\n");
+        scanf("%d",&status);
+        switch(status){
+        case 1:
+            printf("Enter your number:\n");
+            scanf("%d",&number);
+            pushBack(head,number);
+            break;
+        case 2:
+            printf("Enter your index:\n");
+            scanf("%d",&index);
+            printf("Enter your number:\n");
+            scanf("%d",&number);
+            insert(head,index,number);
+            break;
+        case 3:
+            printf("Enter your index:\n");
+            scanf("%d",&index);
+            if (index > GetSize(head) || index < 0){
+                printf("Error, wrong index.\n");
+            }else{
+                deleteNth(&head,index-1);
+            }
+            break;
+        case 4:
+            printLinkedList(head);
+            break;
+        default:
+            printf("Bye bye!");
+            return 0;
+        }
 
-    //Insert node with value 333 after the 4th element
-    insert(head, 4, 333);
-    printLinkedList(head);
-    //Insert 4 elements at the end of the list
-    pushBack(head, 11);
-    pushBack(head, 12);
-    pushBack(head, 13);
-    pushBack(head, 14);
-    printLinkedList(head);
-
-
-
-    printLinkedList(head);
-    //Delete 5-th element
-    deleteNth(&head, 4);
-    printLinkedList(head);
+    }
     //Delete list
     deleteList(&head);
 
