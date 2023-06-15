@@ -96,7 +96,7 @@ int GetSize(Node* head){
     int size = 0;
     if (head != NULL)
     {
-    size = 1 + GetSize(head->next);//переход к следующему элементу}
+    size = 1 + GetSize(head->next);//переход к следующему элементу
     }
     return size;
 }
@@ -104,25 +104,18 @@ int GetSize(Node* head){
 void insert(Node *head, unsigned n, int val) {
     unsigned i = 0;
     Node *tmp = NULL;
-    if (n > GetSize(head) || n < 0){
-        printf("Error, wrong index.\n");
-        return 0;
+    while (i < n && head->next) {
+        head = head->next;
+        i++;
     }
-    else{
-        while (i < n && head->next) {
-            head = head->next;
-            i++;
-        }
-        tmp = (Node*) malloc(sizeof(Node));
-        tmp->value = val;
-        if (head->next) {
-            tmp->next = head->next;
-        } else {
-            tmp->next = NULL;
-        }
-        head->next = tmp;
+    tmp = (Node*) malloc(sizeof(Node));
+    tmp->value = val;
+    if (head->next) {
+        tmp->next = head->next;
+    } else {
+        tmp->next = NULL;
     }
-
+    head->next = tmp;
 }
 
 int deleteNth(Node **head, int n) {
@@ -185,7 +178,7 @@ void main() {
     int status = 0;
     int index,number;
     while (1){
-        printf("pushBack - 1, insert - 2, delete - 3, printList - 4\n");
+        printf("pushBack - 1, insert - 2, delete - 3, printList - 4, addFirstNumber - 5\n");
         scanf("%d",&status);
         switch(status){
         case 1:
@@ -198,7 +191,11 @@ void main() {
             scanf("%d",&index);
             printf("Enter your number:\n");
             scanf("%d",&number);
-            insert(head,index,number);
+            if (index >= GetSize(head) || index < 0){
+                printf("Error, wrong index.\n");
+            }else{
+                insert(head,index,number);
+            }
             break;
         case 3:
             printf("Enter your index:\n");
@@ -212,13 +209,17 @@ void main() {
         case 4:
             printLinkedList(head);
             break;
+        case 5:
+            printf("Enter your number:\n");
+            scanf("%d",&number);
+            push(&head,number);
+            break;
         default:
             printf("Bye bye!");
             return 0;
         }
 
     }
-    //Delete list
     deleteList(&head);
 
     getch();
