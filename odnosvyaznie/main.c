@@ -203,7 +203,7 @@ void main() {
             if (index > GetSize(head) || index < 0){
                 printf("Error, wrong index.\n");
             }else{
-                deleteNth(&head,index-1);
+                deleteNth(&head,index);
             }
             break;
         case 4:
